@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <cutils/log.h>
+#include <android/log.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -33,6 +33,11 @@
 #include <math.h>
 
 namespace ime_pinyin {
+
+
+#define RET_BUF_LEN 256
+#define LOG_FATAL_IF(...) 
+
 
 #ifdef ___DEBUG_PERF___
 static uint64 _ellapse_ = 0;
@@ -48,7 +53,7 @@ static struct timeval _tv_start_, _tv_end_;
                   (_tv_end_.tv_usec - _tv_start_.tv_usec); \
     } while(0)
 #define LOGD_PERF(message) \
-    ALOGD("PERFORMANCE[%s] %llu usec.", message, _ellapse_);
+    LOG_FATAL_IF(message);
 #else
 #define DEBUG_PERF_BEGIN
 #define DEBUG_PERF_END

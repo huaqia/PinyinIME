@@ -15,7 +15,7 @@
  */
 
 #include <assert.h>
-#include <cutils/log.h>
+#include <android/log.h>
 #include <jni.h>
 #include <string.h>
 #include <sys/types.h>
@@ -31,7 +31,17 @@ extern "C" {
 
 using namespace ime_pinyin;
 
+/*
+ * This is the local tag used for the following simplified
+ * logging macros.  You can change this preprocessor definition
+ * before using the other macros to change the tag.
+ */
+#ifndef LOG_TAG
+#define LOG_TAG "PinyinIME"
+#endif
+
 #define RET_BUF_LEN 256
+#define LOG_FATAL_IF(...)  
 
 static char16 retbuf[RET_BUF_LEN];
 static char16 (*predict_buf)[kMaxPredictSize + 1] = NULL;
@@ -388,11 +398,10 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
     }
 
     clazz = env->FindClass("java/io/FileDescriptor");
-    LOG_FATAL_IF(clazz == NULL, "Unable to find Java class java.io.FileDescriptor");
+    LOG_FATAL_IF("Unable to find Java class java.io.FileDescriptor");
     gFileDescriptorOffsets.mClass = (jclass) env->NewGlobalRef(clazz);
     gFileDescriptorOffsets.mDescriptor = env->GetFieldID(clazz, "descriptor", "I");
-    LOG_FATAL_IF(gFileDescriptorOffsets.mDescriptor == NULL,
-                 "Unable to find descriptor field in java.io.FileDescriptor");
+    LOG_FATAL_IF("Unable to find descriptor field in java.io.FileDescriptor");
 
     return JNI_TRUE;
 }
