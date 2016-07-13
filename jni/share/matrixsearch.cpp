@@ -1716,8 +1716,7 @@ size_t MatrixSearch::get_lpis(const uint16* splid_str, size_t splid_str_len,
     size_t remain_num = 0;
     for (size_t pos = 0; pos < lpsi_num; pos++) {
       if (pos > 0 && utf16_strcmp(lpsis[pos].str, lpsis[pos - 1].str) == 0) {
-        if (lpsis[pos].lpi.psb < lpsis[pos - 1].lpi.psb) {
-          assert(remain_num > 0);
+        if (remain_num > 0 && lpsis[pos].lpi.psb < lpsis[pos - 1].lpi.psb) {
           lma_buf[remain_num - 1] = lpsis[pos].lpi;
         }
         continue;
@@ -1752,8 +1751,7 @@ size_t MatrixSearch::get_lpis(const uint16* splid_str, size_t splid_str_len,
             lma_buf[pos].hanzi == pfullsent[0])
           continue;
 
-        if (lma_buf[pos].psb < lma_buf[pos - 1].psb) {
-          assert(remain_num > 0);
+        if (remain_num > 0 && lma_buf[pos].psb < lma_buf[pos - 1].psb) {
           assert(lma_buf[remain_num - 1].hanzi == lma_buf[pos].hanzi);
           lma_buf[remain_num - 1] = lma_buf[pos];
         }
